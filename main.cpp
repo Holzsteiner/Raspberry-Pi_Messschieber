@@ -7,8 +7,8 @@ int main(void)
 	timespec lt = {}, ct = {};
 	
 	wiringPiSetup();
-	pinMode(13, INPUT);		//MISO für data als input
-	pinMode(14, INPUT);		//SCLK für clock als input
+	pinMode(13, INPUT);		//MISO fÃ¼r data als input
+	pinMode(14, INPUT);		//SCLK fÃ¼r clock als input
 
 	bool buffer[24] = {};		//24 bit daten-speicher
 	
@@ -24,7 +24,7 @@ int main(void)
 			long tdiff = ct.tv_nsec - lt.tv_nsec;		//vergangene Zeit seit letztem clock-Signal berechnen
 			lt = ct;
 
-			if (tdiff > 10000000) {				//falls diese vergangene Zeit über 10 ms liegt, dann i auf 0 stellen (was den Anfang des 24 bit-Signals definiert)
+			if (tdiff > 10000000) {				//falls diese vergangene Zeit Ã¼ber 10 ms liegt, dann i auf 0 stellen (was den Anfang des 24 bit-Signals definiert)
 				i = 0;
 			}
 			
@@ -39,16 +39,16 @@ int main(void)
 					ret |= tmp << (i - 1);		//nachdem man am 24. bit angekommen ist, die 2 byte lange zahl aus dem 24 bit speicher in eine ganzzahl konvertieren
 				}
 
-				printf("%f mm\n", (float)ret/100.0f);	//Anzeige in mm(die ganzzahl durch 100 Teilen, da 100stel mm übertragen werden)
-				i = 0;		//i auf 0 setzten, damit der 24. bit buffer vom anfang an wieder beschrieben wird
+				printf("%f mm\n", (float)ret/100.0f);	//Anzeige in mm(die ganzzahl durch 100 Teilen, da 100stel mm Ã¼bertragen werden)
+				i = 0;		//i auf 0 setzten, damit der 24-bit-buffer vom anfang an wieder beschrieben wird
 
-				delay(100);				//Last wieder aufheben, da das nächste signal erst nach 100 ms oder später kommt
+				delay(100);				//Last wieder aufheben, da das nÃ¤chste signal erst nach 100 ms oder spÃ¤ter kommt
 			}
 			
-			buffer[i] = digitalRead(13);			//24 bit-Speicher füllen 	
+			buffer[i] = digitalRead(13);			//24 bit-Speicher fÃ¼llen 	
 		}
 
-		clkSignal = _clkSignal;					//altes clock signal mit dem neuen überschreiben, für nächsten loop
+		clkSignal = _clkSignal;					//altes clock signal mit dem neuen Ã¼berschreiben, fÃ¼r nÃ¤chsten loop
 	}
 	
 	return 0;
